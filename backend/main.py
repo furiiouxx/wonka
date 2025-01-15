@@ -2,50 +2,40 @@
 # contains all the api rotes and their schemas
 
 from flask import Flask, request, jsonify
+from firebase import firestore_client
+from google.cloud import firestore 
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 
-# In-memory storage for simplicity (Replace with Firebase in production)
-meetings = []
-tasks = []
-reminders = []
-summaries = {}
 
 # 1. **Meeting Scheduling** 
 
-# Schedule a new meeting
+# Create a meeting
 @app.route('/meetings', methods=['POST'])
-def schedule_meeting():
-    data = request.get_json()
-    meeting_id = len(meetings) + 1
+def create_meeting():
+    data = request.json
     meeting = {
-        'meeting_id': meeting_id,
-        'title': data['title'],
-        'participants': data['participants'],
-        'start_time': data['start_time'],
-        'end_time': data['end_time'],
-        'location': data['location']
+        "title": data.get("title"),
+        "meeting_date": datetime.strptime(data.get("meeting_date"), '%Y-%m-%d %H:%M:%S'),
+        "participants": data.get("participants")
     }
-    meetings.append(meeting)
-    return jsonify({"message": "Meeting scheduled successfully", "meeting_id": meeting_id}), 201
+    meeting_ref = firestore_client.collection('meetings').add(meeting)
+    return jsonify({"id": meeting_ref[1].id, "message": "Meeting created successfully!"}), 201
 
-# Fetch all upcoming meetings
-@app.route('/meetings', methods=['GET'])
-def get_meetings():
-    participant_email = request.args.get('participant_email')
-    if participant_email:
-        participant_meetings = [meeting for meeting in meetings if participant_email in meeting['participants']]
-        return jsonify(participant_meetings)
-    return jsonify(meetings)
-
-# Cancel a scheduled meeting
-@app.route('/meetings/<int:meeting_id>', methods=['DELETE'])
-def cancel_meeting(meeting_id):
-    meeting = next((meeting for meeting in meetings if meeting['meeting_id'] == meeting_id), None)
-    if not meeting:
-        return jsonify({"message": "Meeting not found"}), 404
-    meetings.remove(meeting)
-    return jsonify({"message": "Meeting cancelled"})
+# Fetch meetings for the week
+@app.route('/meetings/week', methods=['GET'])
+def get_weekly_meetings():
+    start_date = datetime.now()
+    end_date = start_date + timedelta(days=7)
+    meetings = []
+    for meeting in firestore_client.collection('meetings') \
+        .where('meeting_date', '>=', start_date) \
+        .where('meeting_date', '<=', end_date).stream():
+        meeting_data = meeting.to_dict()
+        meeting_data['id'] = meeting.id
+        meetings.append(meeting_data)
+    return jsonify(meetings), 200
 
 
 # 2. **Task Automation**
@@ -53,36 +43,34 @@ def cancel_meeting(meeting_id):
 # Create a new task
 @app.route('/tasks', methods=['POST'])
 def create_task():
-    data = request.get_json()
-    task_id = len(tasks) + 1
+    data = request.json
     task = {
-        'task_id': task_id,
-        'title': data['title'],
-        'due_date': data['due_date'],
-        'assignee': data['assignee'],
-        'status': data['status']
+        "title": data.get("title"),
+        "publish_date": datetime.strptime(data.get("publish_date"), '%Y-%m-%d'),
+        "assignee": data.get("assignee")
     }
-    tasks.append(task)
-    return jsonify({"message": "Task created successfully", "task_id": task_id}), 201
+    task_ref = firestore_client.collection('tasks').add(task)
+    return jsonify({"id": task_ref[1].id, "message": "Task created successfully!"}), 201
 
-# Update the status or details of a task
-@app.route('/tasks/<int:task_id>', methods=['PATCH'])
-def update_task(task_id):
-    data = request.get_json()
-    task = next((task for task in tasks if task['task_id'] == task_id), None)
-    if not task:
-        return jsonify({"message": "Task not found"}), 404
-    task.update(data)
-    return jsonify({"message": "Task updated successfully"})
+# Fetch Sent Tasks for the week
+@app.route('/tasks/past', methods=['GET'])
+def get_past_tasks():
+    # Fetch tasks with due dates before the current date
+    current_date = datetime.now()
+    tasks_ref = firestore_client.collection('tasks')
+    query = tasks_ref.where('due_date', '<', current_date)
+    past_tasks = [doc.to_dict() for doc in query.stream()]
+    return jsonify({"tasks": past_tasks}), 200
 
-# Fetch all tasks for a user
-@app.route('/tasks', methods=['GET'])
-def get_tasks():
-    assignee = request.args.get('assignee')
-    if assignee:
-        assignee_tasks = [task for task in tasks if task['assignee'] == assignee]
-        return jsonify(assignee_tasks)
-    return jsonify(tasks)
+# Fetch Upcoming Tasks for the week
+@app.route('/tasks/upcoming', methods=['GET'])
+def get_upcoming_tasks():
+    # Fetch tasks with due dates after or equal to the current date.
+    current_date = datetime.now()
+    tasks_ref = firestore_client.collection('tasks')
+    query = tasks_ref.where('due_date', '>=', current_date)
+    upcoming_tasks = [doc.to_dict() for doc in query.stream()]
+    return jsonify({"tasks": upcoming_tasks}), 200
 
 
 # 3. **Email Thread Summarization**
@@ -100,28 +88,32 @@ def summarize_email():
 
 # 4. **Reminders and Alerts**
 
-# Create a new reminder
+# Schedule a new reminder
 @app.route('/reminders', methods=['POST'])
-def create_reminder():
-    data = request.get_json()
-    reminder_id = len(reminders) + 1
+def schedule_reminder():
+    data = request.json
     reminder = {
-        'reminder_id': reminder_id,
-        'message': data['message'],
-        'remind_at': data['remind_at'],
-        'recipient': data['recipient']
+        "title": data.get("title"),
+        "remind_at": datetime.strptime(data.get("send_date"), '%Y-%m-%d %H:%M:%S'),
+        "due_date": datetime.strptime(data.get("remind_at"), '%Y-%m-%d %H:%M:%S')
     }
-    reminders.append(reminder)
-    return jsonify({"message": "Reminder created successfully", "reminder_id": reminder_id}), 201
+    reminder_ref = firestore_client.collection('reminders').add(reminder)
+    return jsonify({"id": reminder_ref[1].id, "message": "Reminder scheduled!"}), 201
 
-# Fetch all reminders for a user.
-@app.route('/reminders', methods=['GET'])
-def get_reminders():
-    recipient = request.args.get('recipient')
-    if recipient:
-        recipient_reminders = [reminder for reminder in reminders if reminder['recipient'] == recipient]
-        return jsonify(recipient_reminders)
-    return jsonify(reminders)
+# Fetch reminders for the week
+@app.route('/reminders/week', methods=['GET'])
+def get_weekly_reminders():
+    start_date = datetime.now()
+    end_date = start_date + timedelta(days=7)
+    reminders = []
+    for reminder in firestore_client.collection('reminders') \
+        .where('send_date', '>=', start_date) \
+        .where('send_date', '<=', end_date).stream():
+        reminder_data = reminder.to_dict()
+        reminder_data['id'] = reminder.id
+        reminders.append(reminder_data)
+    return jsonify(reminders), 200
+
 
 # Main entry point for Flask
 if __name__ == '__main__':
