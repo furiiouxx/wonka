@@ -24,16 +24,18 @@
             display: flex;
             flex: 3;
             gap: 20px;
+            justify-content: flex-start; /* Align widgets to the left */
         }
         .main-widget {
-            flex: 2;
+            flex: 1.2;
             background-color: #d8bfd8;
             border: 1px solid #DDE1E6;
             border-radius: 5px;
             padding: 15px;
+            margin-right: auto; /* Ensure no overlap with MANAGE YOUR TEAMS */
         }
         .side-widget {
-            flex: 1;
+            flex: 0.8;
             background-color: #d8bfd8;
             border: 1px solid #DDE1E6;
             border-radius: 5px;
@@ -41,6 +43,22 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            margin-right: auto; /* Ensure no overlap with MANAGE YOUR TEAMS */
+        }
+        .top-right-widget {
+            flex: 0.5;
+            background-color: #d8bfd8;
+            border: 1px solid #DDE1E6;
+            border-radius: 5px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 200px;
+            height: 100px;
         }
         .bottom-section {
             display: flex;
@@ -58,8 +76,6 @@
             margin: 0 0 10px 0;
             font-size: 18px;
         }
-    </style>
-    <style>
         .main-widget h2 {
             font-family: "New Century Schoolbook", "TeX Gyre Schola", serif;
         }
@@ -70,7 +86,6 @@
             font-family: "New Century Schoolbook", "TeX Gyre Schola", serif;
         }
     </style>
-
 </head>
 <body>
 
@@ -86,22 +101,27 @@
         <div class="content">
             <div class="top-section">
                 <div class="main-widget">
-                    <h2>MEETINGS FOR THE WEEK</h2>
+                    <h2 style="font-family: 'New Century Schoolbook', 'TeX Gyre Schola', serif;">MEETINGS FOR THE WEEK</h2>
                     <!-- Content for meetings can go here -->
                 </div>
                 <div class="side-widget">
-                    <h2>TO DO LIST</h2>
+                    <h2 style="font-family: 'New Century Schoolbook', 'TeX Gyre Schola', serif;">TO DO LIST</h2>
                     <!-- Content for to-do list can go here -->
-                    <a href="reminder.html" class="to-do-button" style="display: block; text-align: center; text-decoration: none; color: white; background-color: #3498db; padding: 10px; border-radius: 5px;">+ Add New Task</a>
+                    <a href="reminder.html" class="to-do-button" style="display: block; text-align: center; text-decoration: none; color: white; background-color: #3e2f84; padding: 10px; border-radius: 5px;">+ Add New Task</a>
+                </div>
+                <div class="top-right-widget">
+                    <a href="teams.html" style="text-decoration: none; color: black;">
+                        <h2 style="font-family: 'New Century Schoolbook', 'TeX Gyre Schola', serif; text-align: center;">MANAGE YOUR TEAMS</h2>
+                    </a>
                 </div>
             </div>
             <div class="bottom-section">
                 <div class="widget">
-                    <h2>TO BE SENT:</h2>
+                    <h2 style="font-family: 'New Century Schoolbook', 'TeX Gyre Schola', serif;">TO BE SENT:</h2>
                     <!-- Content for to-be-sent items can go here -->
                 </div>
                 <div class="widget">
-                    <h2>SENT:</h2>
+                    <h2 style="font-family: 'New Century Schoolbook', 'TeX Gyre Schola', serif;">SENT:</h2>
                     <!-- Content for sent items can go here -->
                 </div>
             </div>
@@ -110,5 +130,10 @@
 
 </body>
 </html>
+
+
+
+
+
 
 
