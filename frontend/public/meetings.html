@@ -3,21 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meetings Page</title>
+    <title>Calendar Page</title>
     <!-- Link to commonStyles.css -->
     <link rel="stylesheet" href="css/commonStyles.css">
     <style>
+        body {
+            display: flex;
+        }
+
         .content {
             flex: 1;
+            position: relative;
+            font-family: "New Century Schoolbook", "TeX Gyre Schola", serif;
+        }
+
+        .floating-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #802BB1; /* Matches the WONKA header color */
+            color: white;
+            font-size: 36px;
+            font-weight: bold;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .sidebar-dropdown {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 30%;
+            height: 100%;
+            background-color: #D8BFD8;
+            border-left: 1px solid #ddd;
+            box-shadow: -4px 0px 6px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            box-sizing: border-box;
+            z-index: 999;
+        }
+
+        .sidebar-dropdown.show {
+            display: block;
+        }
+
+        .sidebar-dropdown h2 {
+            font-size: 32px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .form-group {
             display: flex;
             flex-direction: column;
-            padding: 20px;
-            box-sizing: border-box;
+            margin-bottom: 30px;
+        }
+
+        .form-group label {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .participants-box {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 15px;
+            font-size: 18px;
+            cursor: pointer;
+            background-color: #fff;
+            position: relative;
+            min-height: 50px;
+        }
+
+        .dropdown-list {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .dropdown-list.show {
+            display: block;
+        }
+
+        .dropdown-list div {
+            padding: 15px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .dropdown-list div:hover {
+            background-color: #f0f0f0;
+        }
+
+        .selected-participants {
+            display: inline-block;
+            background-color: #e0e0e0;
+            border-radius: 15px;
+            padding: 8px 15px;
+            margin: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .selected-participants:hover {
+            background-color: #d0d0d0;
+        }
+
+        .add-meeting-button {
+            display: block;
+            margin: 30px auto 0 auto;
+            padding: 15px 30px;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            background-color: #3498db;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .add-meeting-button:hover {
+            background-color: #2980b9;
         }
     </style>
 </head>
 <body>
-
     <div class="sidebar">
         <h1>WONKA</h1>
         <a href="index.html" class="home">HOME</a>
@@ -27,8 +156,95 @@
     </div>
 
     <div class="content">
-        <!-- Main content goes here -->
+        <!-- Content for the calendar page -->
+        <button class="floating-button" onclick="toggleSidebar()">+</button>
+        <div id="sidebarDropdown" class="sidebar-dropdown">
+            <h2>CREATE</h2>
+            <div class="form-group">
+                <label for="title">TITLE:</label>
+                <input type="text" id="title" placeholder="Enter title" style="font-size: 18px; padding: 10px;">
+            </div>
+            <div class="form-group">
+                <label for="participants">PARTICIPANTS:</label>
+                <div id="participantsBox" class="participants-box" onclick="toggleDropdown()">
+                    <div id="selectedParticipants"></div>
+                    <span id="participantsPlaceholder">Select participants</span>
+                    <div id="dropdownList" class="dropdown-list">
+                        <div onclick="addParticipant('Participant 1')">Participant 1</div>
+                        <div onclick="addParticipant('Participant 2')">Participant 2</div>
+                        <div onclick="addParticipant('Participant 3')">Participant 3</div>
+                        <div onclick="addParticipant('Participant 4')">Participant 4</div>
+                        <div onclick="addParticipant('Participant 5')">Participant 5</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="start-time">START TIME:</label>
+                <input type="datetime-local" id="start-time" style="font-size: 18px; padding: 10px;">
+            </div>
+            <button class="add-meeting-button" style="background-color: #3E2F84; font-family: 'New Century Schoolbook', 'TeX Gyre Schola', serif;">+ Add Meeting</button>
+        </div>
     </div>
 
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebarDropdown');
+            sidebar.classList.toggle('show');
+        }
+
+        function toggleDropdown() {
+            const dropdown = document.getElementById('dropdownList');
+            dropdown.classList.toggle('show');
+        }
+
+        function addParticipant(name) {
+            const placeholder = document.getElementById('participantsPlaceholder');
+            const selectedBox = document.getElementById('selectedParticipants');
+            const dropdown = document.getElementById('dropdownList');
+
+            // Create a new span for the selected participant
+            const participantSpan = document.createElement('span');
+            participantSpan.className = 'selected-participants';
+            participantSpan.textContent = name;
+            participantSpan.onclick = function () {
+                removeParticipant(name, participantSpan);
+            };
+
+            // Add the participant span to the selected box
+            selectedBox.appendChild(participantSpan);
+
+            // Remove the selected participant from the dropdown list
+            const participantDiv = Array.from(dropdown.children).find(div => div.textContent === name);
+            if (participantDiv) {
+                dropdown.removeChild(participantDiv);
+            }
+
+            // Hide the placeholder if there's at least one participant
+            placeholder.style.display = 'none';
+        }
+
+        function removeParticipant(name, spanElement) {
+            const selectedBox = document.getElementById('selectedParticipants');
+            const dropdown = document.getElementById('dropdownList');
+            const placeholder = document.getElementById('participantsPlaceholder');
+
+            // Remove the span element from the selected box
+            selectedBox.removeChild(spanElement);
+
+            // Add the participant back to the dropdown list
+            const participantDiv = document.createElement('div');
+            participantDiv.textContent = name;
+            participantDiv.onclick = function () {
+                addParticipant(name);
+            };
+            dropdown.appendChild(participantDiv);
+
+            // Show the placeholder if no participants are selected
+            if (selectedBox.children.length === 0) {
+                placeholder.style.display = 'block';
+            }
+        }
+    </script>
 </body>
 </html>
+

@@ -26,6 +26,7 @@
             display: flex;
             align-items: center;
             margin-bottom: 25px;
+            font-family: "New Century Schoolbook", "TeX Gyre Schola", serif;
         }
         .form-group label {
             font-size: 20px;
@@ -41,6 +42,77 @@
             padding: 10px 15px;
             font-size: 18px;
             box-sizing: border-box;
+        }
+        .send-task-button {
+            display: block;
+            margin: 30px auto 0 auto;
+            padding: 15px 30px;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            background-color: #3E2F84;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .send-task-button:hover {
+            background-color: #2C2064;
+        }
+
+        .participants-box {
+            flex: 1;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            background-color: #fff;
+            position: relative;
+            min-height: 50px;
+        }
+
+        .dropdown-list {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .dropdown-list.show {
+            display: block;
+        }
+
+        .dropdown-list div {
+            padding: 15px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .dropdown-list div:hover {
+            background-color: #f0f0f0;
+        }
+
+        .selected-assignees {
+            display: inline-block;
+            background-color: #e0e0e0;
+            border-radius: 15px;
+            padding: 8px 15px;
+            margin: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .selected-assignees:hover {
+            background-color: #d0d0d0;
         }
     </style>
 </head>
@@ -62,18 +134,76 @@
         </div>
         <div class="form-group">
             <label for="publish-date">PUBLISH DATE:</label>
-            <input type="date" id="publish-date">
+            <input type="datetime-local" id="publish-date">
         </div>
         <div class="form-group">
-            <label for="assignee">ASSIGNEE:</label>
-            <select id="assignee">
-                <option value="">Select an assignee</option>
-                <option value="assignee1">Assignee 1</option>
-                <option value="assignee2">Assignee 2</option>
-                <option value="assignee3">Assignee 3</option>
-            </select>
+            <label for="assignees">ASSIGNEE:</label>
+            <div id="assigneesBox" class="participants-box" onclick="toggleAssigneesDropdown()">
+                <div id="selectedAssignees"></div>
+                <span id="assigneesPlaceholder">Select assignees</span>
+                <div id="assigneesDropdown" class="dropdown-list">
+                    <div onclick="addAssignee('Assignee 1')">Assignee 1</div>
+                    <div onclick="addAssignee('Assignee 2')">Assignee 2</div>
+                    <div onclick="addAssignee('Assignee 3')">Assignee 3</div>
+                </div>
+            </div>
         </div>
+        <button class="send-task-button" style="font-family: 'New Century Schoolbook', 'TeX Gyre Schola', serif; background-color: #3E2F84;">SEND TASK</button>
     </div>
 
+    <script>
+        function toggleAssigneesDropdown() {
+            const dropdown = document.getElementById('assigneesDropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        function addAssignee(name) {
+            const placeholder = document.getElementById('assigneesPlaceholder');
+            const selectedBox = document.getElementById('selectedAssignees');
+            const dropdown = document.getElementById('assigneesDropdown');
+
+            // Create a new span for the selected assignee
+            const assigneeSpan = document.createElement('span');
+            assigneeSpan.className = 'selected-assignees';
+            assigneeSpan.textContent = name;
+            assigneeSpan.onclick = function () {
+                removeAssignee(name, assigneeSpan);
+            };
+
+            // Add the assignee span to the selected box
+            selectedBox.appendChild(assigneeSpan);
+
+            // Remove the selected assignee from the dropdown list
+            const assigneeDiv = Array.from(dropdown.children).find(div => div.textContent === name);
+            if (assigneeDiv) {
+                dropdown.removeChild(assigneeDiv);
+            }
+
+            // Hide the placeholder if there's at least one assignee
+            placeholder.style.display = 'none';
+        }
+
+        function removeAssignee(name, spanElement) {
+            const selectedBox = document.getElementById('selectedAssignees');
+            const dropdown = document.getElementById('assigneesDropdown');
+            const placeholder = document.getElementById('assigneesPlaceholder');
+
+            // Remove the span element from the selected box
+            selectedBox.removeChild(spanElement);
+
+            // Add the assignee back to the dropdown list
+            const assigneeDiv = document.createElement('div');
+            assigneeDiv.textContent = name;
+            assigneeDiv.onclick = function () {
+                addAssignee(name);
+            };
+            dropdown.appendChild(assigneeDiv);
+
+            // Show the placeholder if no assignees are selected
+            if (selectedBox.children.length === 0) {
+                placeholder.style.display = 'block';
+            }
+        }
+    </script>
 </body>
 </html>
