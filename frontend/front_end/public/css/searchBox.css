@@ -1,0 +1,83 @@
+@charset "utf-8";
+@import url('https://fonts.googleapis.com/css2?family=Lato&family=Montserrat:wght@800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rowdies:wght@300&display=swap');
+
+/* Name: Ann Maria Jiji
+   Class: DISM/2A/04
+   Admin No.: 2227522
+/*
+
+/* Set a minimum height for the content to make the page scrollable */
+.content {
+  min-height: 100vh; /* Set the minimum height to 100% of the viewport height */
+  padding: 20px; /* Optional: Add some padding to the content for spacing */
+}
+
+/* Input fields and dropdowns */
+
+/* Common styling for input fields and dropdowns */
+.blanks {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+  align-items: center;
+  border-width: 3px;
+  height: 200px;
+  /* color: white; */
+  /* background-color: #1f2833; */
+  padding: 5px 10px;
+  border-radius: 10px;
+  /* font-size: 20px; */
+  margin-top: 50px;
+  margin-bottom: 10px;
+}
+
+#gameBlank,
+#platformBlank,
+#catBlank {
+  width: 400px;
+  height: 50px; /* Ensure all elements have the same height */
+  background-color: #1f2833;
+  color: white;
+}
+
+#gameBlank {
+  transform: translateY(4%);
+  border-color: #66fcf1;
+  margin-right: 5px;
+}
+
+
+#platformBlank {
+  border-color: #66fcf1;
+  margin: 0 5px;
+}
+
+#catBlank {
+  border-color: #66fcf1;
+  margin-left: 5px;
+  transform: translateY(-19%);
+}
+
+/* Center align the search button */
+#searchButton {
+  position: absolute;
+  right: 46%;
+  top: 170px;
+  transform: translateY(-50%);
+  background-color: #1f2833;
+  border-color: #1f2833;
+  font-family: Rowdies, sans-serif;
+  font-size: 20px;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#searchButton:hover {
+  background-color: #4f5b66; /* Button color on hover */
+}
+
+

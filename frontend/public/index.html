@@ -1,1 +1,114 @@
-hi 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+    <!-- Link to commonStyles.css -->
+    <link rel="stylesheet" href="css/commonStyles.css">
+    <style>
+        .content-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .content {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            padding: 20px;
+            box-sizing: border-box;
+            gap: 20px;
+        }
+        .top-section {
+            display: flex;
+            flex: 3;
+            gap: 20px;
+        }
+        .main-widget {
+            flex: 2;
+            background-color: #d8bfd8;
+            border: 1px solid #DDE1E6;
+            border-radius: 5px;
+            padding: 15px;
+        }
+        .side-widget {
+            flex: 1;
+            background-color: #d8bfd8;
+            border: 1px solid #DDE1E6;
+            border-radius: 5px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .bottom-section {
+            display: flex;
+            flex: 1;
+            gap: 20px;
+        }
+        .widget {
+            flex: 1;
+            background-color: #d8bfd8;
+            border: 1px solid #DDE1E6;
+            border-radius: 5px;
+            padding: 15px;
+        }
+        .widget h2 {
+            margin: 0 0 10px 0;
+            font-size: 18px;
+        }
+    </style>
+    <style>
+        .main-widget h2 {
+            font-family: "New Century Schoolbook", "TeX Gyre Schola", serif;
+        }
+        .side-widget {
+            font-family: "New Century Schoolbook", "TeX Gyre Schola", serif;
+        }
+        .widget {
+            font-family: "New Century Schoolbook", "TeX Gyre Schola", serif;
+        }
+    </style>
+
+</head>
+<body>
+
+    <div class="sidebar">
+        <h1>WONKA</h1>
+        <a href="#home" class="home">HOME</a>
+        <a href="meetings.html" class="calendar">CALENDAR</a>
+        <a href="email.html" class="email">EMAIL</a>
+        <a href="task.html" class="tasks">TASKS</a>
+    </div>
+
+    <div class="content-wrapper">
+        <div class="content">
+            <div class="top-section">
+                <div class="main-widget">
+                    <h2>MEETINGS FOR THE WEEK</h2>
+                    <!-- Content for meetings can go here -->
+                </div>
+                <div class="side-widget">
+                    <h2>TO DO LIST</h2>
+                    <!-- Content for to-do list can go here -->
+                    <a href="reminder.html" class="to-do-button" style="display: block; text-align: center; text-decoration: none; color: white; background-color: #3498db; padding: 10px; border-radius: 5px;">+ Add New Task</a>
+                </div>
+            </div>
+            <div class="bottom-section">
+                <div class="widget">
+                    <h2>TO BE SENT:</h2>
+                    <!-- Content for to-be-sent items can go here -->
+                </div>
+                <div class="widget">
+                    <h2>SENT:</h2>
+                    <!-- Content for sent items can go here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+
+

@@ -1,0 +1,106 @@
+<!-- 
+Ann Maria Jiji
+2227522
+DISM2B04 
+-->
+
+
+<html>
+    <body>
+        File does not exist or web server does not support post method!
+    </body>
+
+    <script>
+      const express = require('express');
+const app = express();
+const mysql = require('mysql');
+
+// Create a MySQL connection pool (you can use your own database configuration)
+const pool = mysql.createPool({
+  host: 'localhost',
+  user: 'your_username',
+  password: 'your_password',
+  database: 'your_database'
+});
+
+app.get('/search', (req, res) => {
+  // Extract query parameters from req.query
+  const gameTitle = req.query.gameTitle;
+  const platformName = req.query.platformName;
+  const categoryName = req.query.categoryName;
+
+  // Initialize the base SQL query
+  let sql = 'SELECT * FROM games WHERE 1=1'; // The 'WHERE 1=1' part is used as a placeholder to dynamically add conditions
+
+  // Check if gameTitle is provided
+  if (gameTitle) {
+    // Add the gameTitle condition with wildcard search using LIKE
+    sql += ' AND title LIKE ?';
+  }
+
+  // Check if platformName is provided
+  if (platformName) {
+    // Retrieve the platformId based on the platformName (you'll need to implement this part)
+    const platformId = getPlatformIdByName(platformName);
+    if (platformId) {
+      // Add the platformId condition
+      sql += ' AND platform_id = ?';
+    }
+  }
+
+  // Check if categoryName is provided
+  if (categoryName) {
+    // Retrieve the categoryId based on the categoryName (you'll need to implement this part)
+    const categoryId = getCategoryIdByName(categoryName);
+    if (categoryId) {
+      // Add the categoryId condition
+      sql += ' AND category_id = ?';
+    }
+  }
+
+  // Prepare the parameter values to be passed to the query
+  const params = [];
+  if (gameTitle) {
+    params.push(`%${gameTitle}%`);
+  }
+  if (platformName && platformId) {
+    params.push(platformId);
+  }
+  if (categoryName && categoryId) {
+    params.push(categoryId);
+  }
+
+  // Execute the query using the MySQL connection pool
+  pool.query(sql, params, (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+
+    // Return the search results as JSON
+    res.json(results);
+  });
+});
+
+// Helper function to get platformId by platformName
+function getPlatformIdByName(platformName) {
+  // Implement your logic to retrieve platformId from the platformName
+  // Return the platformId or null if not found
+  return null;
+}
+
+// Helper function to get categoryId by categoryName
+function getCategoryIdByName(categoryName) {
+  // Implement your logic to retrieve categoryId from the categoryName
+  // Return the categoryId or null if not found
+  return null;
+}
+
+app.listen(3000, () => {
+  console.log('Server started on port 3000');
+});
+
+    </script>
+</html>
+
+

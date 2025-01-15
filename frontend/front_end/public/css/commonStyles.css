@@ -1,0 +1,293 @@
+@charset "utf-8";
+
+/* Logo font */
+@import url('https://fonts.googleapis.com/css2?family=Rowdies:wght@300&display=swap');
+
+
+/* Name: Ann Maria Jiji
+   Class: DISM/2A/04
+   Admin No.: 2227522
+/*
+
+/* HTML Styles */
+
+html, body {
+   height: 100%;
+   margin: 0;
+   padding: 0;
+   background-color: #1f2833;
+}
+ 
+.main-container {
+   min-height: 100vh;
+   overflow-x: auto;
+}
+
+#elements {
+   display: flex;
+   justify-content: space-between;
+}
+ 
+ 
+/* Navigation Bar Styles */
+#custom-navbar {
+   height: 90px;
+   padding: 10px 20px;
+   line-height: 50px;
+   /* background-color: #0b0c10; */
+}
+
+#brand {
+   font-size: 40px;
+   font-family: Rowdies, cursive;
+   color: #66fcf1;
+   margin-right: 20px;
+}
+
+.nav-link {
+   font-size: 20px;
+   font-family: Rowdies, cursive;
+   color: #45a29e;
+}
+
+.nav-link:hover {
+   color: #d1e8e2;
+}
+
+#button {
+  font-size: 20px;
+  font-family: Rowdies, cursive;
+  color: #45a29e; 
+  background-color: #1f2833;
+  border-radius: 10px; 
+  border-color: #45a29e;
+  border-width: 2px;
+  width: 100px;
+  text-decoration: none; 
+  text-align: center; 
+}
+
+#button:hover {
+   border-color: #66fcf1;
+   color: #66fcf1
+}
+
+.custom-footer {
+   color: #1f2833;
+}
+
+
+/*----------------------------------------------------------*/
+
+/* Add Platform/Game Styles */
+#platformHead,
+#gameHead {
+   color: #45a29e;
+   font-family: Rowdies, cursive;
+   margin-top: 2px;
+   margin-left: 30px;
+}
+
+.platformForm,
+.gameForm {
+   margin-left: 30px;
+   align-self: center;
+}
+
+.platformForm label,
+.gameForm label {
+   display: block;
+   margin-top: 10px;
+   margin-bottom: 5px;
+   font-family: Lato, sans-serif;
+   color: #ffcb9a;
+}
+
+.platformForm input[type="text"], 
+#description,
+.gameForm input[type="text"],
+#gamePrice {
+    width: 25%;
+    padding: 5px;
+    border: 1px solid #c5c6c7;
+    border-radius: 5px;
+    background-color: #1f2833;
+    color: white;
+}
+
+#description {
+   background-color: #1f2833;
+   border-color: #c5c6c7;
+   color: white;
+}
+
+#platformBlank, 
+#catBlank {
+   border-color: #ffcb9a;
+   background-color: #1f2833;
+   color: white;
+   width: 200px;
+   margin: 0 5px;
+   margin-top: 20px;
+}
+
+.platformForm button,
+.gameForm button {
+   display: block;
+   width: 20%;
+   padding: 10px;
+   margin-top: 10px;
+   background-color: #116466; /* Primary button color */
+   color: #fff;
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+   transition: background-color 0.2s;
+   font-family: Lato, sans-serif;
+}
+ 
+.platformForm button:hover,
+.gameForm button:hover {
+   background-color: #45a29e; /* Button color on hover */
+}
+
+/*----------------------------------------------------------*/
+
+/* Serch result styles */
+/* Styling for the container holding the game cards */
+.game-grid {
+  margin-top: 20px;
+}
+
+/* Styling for each individual game card */
+.game-card {
+  border: 1px solid #ffcb9a;
+  padding: 10px;
+  margin: 20px;
+  background-color: #1f2833;
+  text-align: center;
+  color: #d1e8e2;
+}
+
+.game-card img {
+  max-width: 100%;
+  height: auto;
+}
+
+.game-card h3 {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.game-card h4 {
+  font-size: 14px;
+  color: #c5c6c7;
+  margin-bottom: 5px;
+}
+
+.game-card a {
+   font-size: 13px;
+   color: #66fcf1;
+   margin-bottom: 5px;
+}
+
+/* details styles */
+.game-details {
+   display: flex;
+   align-items: center;
+   border: 1px solid #ccc;
+   padding: 10px;
+   margin-bottom: 10px;
+   border-radius: 5px;
+   color: #d1e8e2;
+ }
+
+ .game-image img {
+   width: 150px;
+   height: 150px;
+   object-fit: cover;
+   border-radius: 5px;
+   margin-right: 20px;
+ }
+
+ .game-content {
+   flex: 1;
+ }
+
+ .game-title {
+   font-size: 24px;
+   font-weight: bold;
+   margin-bottom: 10px;
+ }
+
+ .game-description {
+   font-size: 16px;
+   margin-bottom: 10px;
+ }
+
+ .game-price,
+ .game-year,
+ .game-platform,
+ .game-category {
+   font-size: 14px;
+   margin-bottom: 5px;
+ }
+
+
+/* add review styles */
+.R-container {
+   max-width: 600px;
+   margin: 0 auto;
+   padding: 20px;
+   /* border: 1px solid #ccc; */
+   border-radius: 5px;
+   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+   color: #d1e8e2;
+ }
+
+ .form-group {
+   margin-bottom: 20px;
+ }
+
+ label {
+   display: block;
+   font-weight: bold;
+   margin-bottom: 5px;
+ }
+
+ input[type="text"],
+ input[type="number"],
+ textarea {
+   width: 100%;
+   padding: 10px;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+ }
+
+ textarea {
+   resize: vertical;
+   height: 100px;
+ }
+
+ input[type="number"]::-webkit-inner-spin-button,
+ input[type="number"]::-webkit-outer-spin-button {
+   -webkit-appearance: none;
+   margin: 0;
+ }
+
+ /* input[type="number"] {
+   -moz-appearance: textfield;
+ } */
+
+ input[type="submit"] {
+   background-color: #116466;
+   color: #fff;
+   border: none;
+   padding: 10px 20px;
+   border-radius: 5px;
+   cursor: pointer;
+ }
+
+ 
+
+

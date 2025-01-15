@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- 
+Ann Maria Jiji
+2227522
+DISM2B04 
+-->
+
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    
+  
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    
+    <!-- Javascripts   Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"></script>
+  
+    <title>SP Games</title>
+    <link rel="stylesheet" href="./css/commonStyles.css">
+    
+</head>
+<body>
+    <div class="main-container">
+    
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg" id="custom-navbar">
+            <div id="brand">
+                <a><i class="bi bi-joystick"></i>SP Games</a>
+            </div>
+    
+            <div class="d-flex" id="elements">
+                <a class="nav-link flex-fill" href="adminHomePage.html">Admin Dashboard</a>
+            </div>
+        </nav>
+
+
+        <h1 id="gameHead">Add a new game</h1>
+
+    <form class="gameForm">
+
+        <!--Name-->
+        <div>
+            <label for="gameTitle">Game Title:</label>
+            <input type="text" id="gameTitle" name="gameTitle" required>
+        </div>
+
+        <!--Description-->
+        <div>
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" rows="4"></textarea>
+        </div>
+
+        <!--Year Released-->
+        <div>
+            <label for="gameYear">Release year:</label>
+            <input type="text" id="gameYear" name="gameYear" pattern="19[0-9]{2}|20[0-2][0-3]" required> <!-- validate years to be 1900 to 2023-->
+        </div>
+
+        <!--Platform-->
+        <div class="col-md-4 mb-2">
+            <select class="rounded-pill" id="platformBlank" name="platform" >
+              <option value="" selected disabled hidden>Choose a platform</option>
+                
+              <!-- JS script below will dynamically populate the dropdown list -->
+
+            </select>
+          </div>
+
+        <!--Category-->
+        <div class="col-md-4 mb-2">
+            <select class="rounded-pill" id="catBlank" name="category" >
+              <option value="" selected disabled hidden>Choose a category</option>
+    
+              <!-- JS script below will dynamically populate the dropdown list -->
+    
+            </select>
+        </div>
+
+        <!--Price-->
+        <div>
+            <label for="gamePrice">Price:</label>
+            <input type="number" id="gamePrice" name="gamePrice" step="0.01" pattern="^\d+(\.\d{1,2})?$" >
+        </div>
+        
+        <div>
+            <button type="submit">Add</button>
+        </div>
+    </form>
+    </div>
+
+    <script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <!-- JS code -->
+
+    <script>
+
+        // fix base Url
+        const baseUrl = "http://localhost:3000";
+
+
+        //--------------------------------------------------------------
+        // POPULATING DROPDOWN
+
+        // initialising arrays
+        let platforms = [];
+        let categories = [];
+
+        // get platform
+        axios.get(`${baseUrl}/platform/`)
+
+            // handling successful responses
+            .then((response) => {
+                platforms = response.data;
+
+                // looping through the array
+                platforms.forEach((platform) => {
+                    const platformHtml = `
+                    <option value="${platform.platform_name}">${platform.platform_name}</option>
+                    `;
+
+                    // adding to the html code
+                    $("#platformBlank").append(platformHtml); 
+                });
+            })
+
+            // handle error
+            .catch((error) => {
+                console.log(error);
+            })
+
+
+        // get category
+        axios.get(`${baseUrl}/category/`)
+
+            // handling successful responses
+            .then((response) => {
+                categories = response.data;
+
+                // looping through the array
+                categories.forEach((category) => {
+                    const catHtml = `
+                    <option value="${category.catname}">${category.catname}</option>
+                    `;
+
+                    // adding to the html code
+                    $("#catBlank").append(catHtml); 
+                });
+            })
+
+            // handle error
+            .catch((error) => {
+                console.log(error);
+            })
+         
+        
+
+
+        //-------------------------------------------------------------
+        // PASSING VALUES TO BACKEND 
+                
+        // submits an event listener to the add platform form with respective id
+        // so that when the form is submitted, the specific function is excuted
+        $(".gameForm").submit((event) => {
+
+            // prevent page reload
+            event.preventDefault();
+
+            // extracting user input and changing it to JS
+            const title = $("#gameTitle").val();
+            const description = $("#description").val();
+            const year = $("#gameYear").val();
+            const platformName = $("#platformBlank").val();
+            const catName = $("#catBlank").val();
+            const price = $("#gamePrice").val();
+
+            // matching the name to id
+            const tmp1 = platforms.find((platform) => platform.platform_name === platformName);
+            const platformID = tmp1.platformid;
+
+            const tmp2 = categories.find((category) => category.catname === catName);
+            const categoryID = tmp2.categoryid;
+
+
+            // this will be sent to the server in the POST request
+            const requestBody = {
+                type: "Admin",
+                title: title,
+                description: description,
+                year: year,
+                platformid: platformID,
+                categoryid: categoryID,
+                price: price
+            };
+
+            axios.post(`${baseUrl}/game/`, requestBody)
+
+                // handling successful responses
+                .then((response) => {
+
+                    console.log("response received")
+
+                    // check for success
+                    if (response.status === 201) {
+                        alert(`Game added successfully!`) // alert to show that game is added
+                        window.location.href = '/newGame.html';
+                    } 
+                    // check for duplicate entry
+                    else if (response.status === 422) {
+                        alert(`Game already exists! Please try a different name.`);
+                    } 
+                    // check for anything else
+                    else {
+                        alert(`Unexpected response: ${response.status}. Please try again.`);
+                    }
+                })
+
+                // handling errors
+                .catch((error) => {
+
+                    console.log("error received")
+                    
+                    alert(`Game could not be added. Please try again!`)
+                    console.error();
+            })
+
+        })
+
+
+
+
+    </script>
+    
+</body>
+</html>

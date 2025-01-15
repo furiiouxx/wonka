@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- 
+Ann Maria Jiji
+2227522
+DISM2B04 
+-->
+
+<!--
+    References:
+    Photo by 
+    References:
+    Photo by Photo by <a href="https://unsplash.com/@lilrohit?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Rohit Choudhari</a> on <a href="https://unsplash.com/photos/tk2_RBZq7RA?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+-->
+  
+
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    
+  
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    
+    <!-- Javascripts   Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"></script>
+  
+    <title>SP Games</title>
+    <link rel="stylesheet" href="./css/commonStyles.css">
+    <!-- <link rel="stylesheet" href="./css/imagesStyles.css"> -->
+    <link rel="stylesheet" href="./css/loginStyles.css">
+    
+</head>
+
+<!----------------------------------------------------------------------------------------------------------------------------------------------------------->
+<body>
+    <div class="container">
+        <div class="login-form">
+          <h1>Login to SP Games</h1>
+          <form id="loginForm">
+            <div class="form-group">
+              <label for="email">Email:</label>
+              <input type="text" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+              <label for="password">Password:</label>
+              <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Login</button>
+          </form>
+        </div>
+    </div>
+    
+
+    
+    <script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    
+    <!-- JS code -->
+
+    <script>
+
+      // fix base URL
+      const baseUrl = "http://localhost:3000";
+
+      // submits an event listener to the login form with respective class
+      // so that when the form is submitted, the specific function is excuted
+      $(".login-form").submit((event) => {
+          
+          // prevent page reload
+          event.preventDefault();
+
+          // extracting user input and changing it into JS
+          const email = $("#email").val();  
+          const password = $("#password").val();
+
+          // this will be sent to the server in the POST request
+          const requestBody = {
+              email: email,
+              password: password
+          };
+
+          axios.post(`${baseUrl}/login/`, requestBody)
+
+              // handling successful responses
+              .then((response) => {
+
+                if (response.data != null) {
+
+                  // check the type of the user 
+                  if (response.data.UserData[0].type === "Customer") {
+
+                    // direct to customerProfile, if it is a customer
+                    window.location.href = "/addReview.html";
+                  } else if (response.data.UserData[0].type === "Admin") {
+
+                    // direct to adminProfile if Admin
+                    window.location.href = "/adminHomePage.html";
+                  } else {
+                    // other stuff
+                    console.log("Unknown user type")
+                  }
+
+                  // store token and userid in a const
+                  const token = response.data.token;
+                  const loggedInUserID = JSON.stringify(response.data.UserData[0].userid); // this 'userid' corresponds with col name
+
+                  // token and userid stored in browser's local storage
+                  localStorage.setItem("token", token);
+                  localStorage.setItem("loggedInUserID", loggedInUserID);
+                } else {
+                  alert("Login Unsuccessful. Please try again!");
+                }
+              })
+
+              // error handling
+              .catch((error) => {
+                  alert(`2nd one Login Unsuccessful. Please try again!`)
+                  console.log(error);
+              });
+
+          
+             });
+
+
+          // axios making a POST request to backend server /login/ endpoint 
+          // request body is the payload aka req.body
+/*           axios.post(`${baseUrl}/login/`, requestBody)
+          .then((response) => {
+            console.log(response.data)
+
+            // Check if the response contains data (non-empty array)
+            if (response.data && Array.isArray(response.data) && response.data.length > 0) {
+              const data = response.data[0]; // Access the first element of the array
+              console.log(response.data)
+
+              // Check the user type and redirect accordingly
+              if (data.type === "Customer") {
+                window.location.href = "customerProfile.html";
+              } else if (data.type === "Admin") {
+                window.location.href = "adminProfile.html";
+              } else {
+                console.log("Unknown user type");
+              }
+
+              // Store token and userid in browser's local storage
+              const token = data.token; // Replace "data.token" with the correct key for the token if needed
+              const loggedInUserID = JSON.stringify(data.userid);
+
+              localStorage.setItem("token", token);
+              localStorage.setItem("loggedInUserID", loggedInUserID);
+            } else {
+              alert("Login Unsuccessful. Please try again!");
+            }
+          })
+          .catch((error) => {
+            alert("2nd one Login Unsuccessful. Please try again!");
+            console.log(error);
+          });
+
+      }); */
+
+    </script>
+          
+
+
+
+
+
+
+             
+  
+
+
+
+
+
+
+
+    
+
+  </body>
+
+
+
+
+</html>
