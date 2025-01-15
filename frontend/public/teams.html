@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Page</title>
+    <!-- Link to commonStyles.css -->
+    <link rel="stylesheet" href="css/commonStyles.css">
+    <style>
+        
+
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+        .content h2 {
+            text-align: center;
+            font-size: 32px;
+            font-family: "New Century Schoolbook", "TeX Gyre Schola", serif;
+            margin-bottom: 40px;
+        }
+
+        .widget-wrapper {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .widget {
+            width: 40%;
+            height: 400px;
+            background-color: #D8BFD8; /* Light purple color */
+            border: 1px solid #bdc3c7;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            font-family: "New Century Schoolbook", "TeX Gyre Schola", serif;
+        }
+
+        .widget h2 {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .team-members {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .team-members div {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .team-members img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .add-member {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .add-member input {
+            width: 80%;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #bdc3c7;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .add-member button {
+            background-color: #802BB1;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 15px 30px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .add-member button:hover {
+            background-color: #6C2F84;
+        }
+
+        .dropdown-button {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-button button {
+            background-color: #802BB1;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 15px 30px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .dropdown-button button:hover {
+            background-color: #6C2F84;
+        }
+
+        .dropdown-list {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #f4f4f4;
+            border: 1px solid #bdc3c7;
+            border-radius: 5px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            width: fit-content;
+        }
+
+        .dropdown-list div {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .dropdown-list div:hover {
+            background-color: #ddd;
+        }
+
+        .dropdown-button:hover .dropdown-list {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar" style="width: 20%; background-color: #2C283E; color: white; display: flex; flex-direction: column; justify-content: space-evenly;">
+        <h1 style="background-color: #802BB1; text-align: center; padding: 0; margin: 0; height: 20%; display: flex; align-items: center; justify-content: center; font-family: 'Apple Chancery', cursive; font-size: 3rem;">WONKA</h1>
+        <a href="index.html" style="text-decoration: none; color: white; background-color: #2D283E; width: 100%; text-align: center; padding: 20px;">HOME</a>
+        <a href="meetings.html" style="text-decoration: none; color: white; background-color: #564F6F; width: 100%; text-align: center; padding: 20px;">CALENDAR</a>
+        <a href="email.html" style="text-decoration: none; color: white; background-color: #4C495D; width: 100%; text-align: center; padding: 20px;">EMAIL</a>
+        <a href="task.html" style="text-decoration: none; color: black; background-color: #D1D7E0; width: 100%; text-align: center; padding: 20px;">TASKS</a>
+    </div>
+
+    <div class="content">
+        <h2>YOUR TEAMS</h2>
+        <div class="widget-wrapper">
+            <div class="widget">
+                <h2>HR TEAM</h2>
+                <div class="team-members">
+                    <div><img src="placeholder.jpg" alt="Profile Picture">Member 1</div>
+                    <div><img src="placeholder.jpg" alt="Profile Picture">Member 2</div>
+                    <div><img src="placeholder.jpg" alt="Profile Picture">Member 3</div>
+                </div>
+                <div class="add-member">
+                    <input type="text" placeholder="Add new member">
+                    <button>+</button>
+                </div>
+            </div>
+
+            <div class="dropdown-button">
+                <button>+</button>
+                <div class="dropdown-list">
+                    <div>FINANCE</div>
+                    <div>SALES</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+
+
+
