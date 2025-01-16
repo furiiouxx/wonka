@@ -1,0 +1,48 @@
+.sidebar a {
+    position: relative; /* Enable positioning for the icon */
+    text-decoration: none;
+    color: white;
+    font-family: Georgia, serif;
+    font-size: 1.5rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Align text and icon to the left */
+    margin: 0;
+    padding-left: 40px; /* Add space for the icon */
+    width: 100%;
+    height: 20%;
+    box-sizing: border-box;
+}
+
+.sidebar a::before {
+    content: ""; /* Placeholder for the icon */
+    position: absolute;
+    left: 10px; /* Adjust to position the icon to the left of the word */
+    width: 20px; /* Width of the icon */
+    height: 20px; /* Height of the icon */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.sidebar a.home::before {
+    background-image: url("icons/home\ \(1\).png"); /* Replace with the path to your home icon */
+}
+
+.sidebar a.calendar::before {
+    background-image: url("icons/calendar.png"); /* Replace with the path to your calendar icon */
+}
+
+.sidebar a.email::before {
+    background-image: url("icons/envelope.png"); /* Replace with the path to your email icon */
+}
+
+.sidebar a.tasks::before {
+    background-image: url("icons/edit.png"); /* Replace with the path to your tasks icon */
+}
+
+.sidebar a.manage-teams::before {
+    background-image: url("icons/users-alt\ \(2\).png"); /* Replace with the path to your manage teams icon */
+}
+

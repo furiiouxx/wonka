@@ -58,6 +58,16 @@ body {
     color: black;
 }
 
-.sidebar a:hover {
+.sidebar a.manage-teams {
     background-color: #6C5F7F;
+    color: white;
 }
+
+.sidebar a:hover {
+    background-color: #bbb4c6;
+}
+
+
+
+
+
