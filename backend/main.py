@@ -1,10 +1,19 @@
 # main.py is the entry point for flask
 # contains all the api rotes and their schemas
 
+import openai 
+import os
 from flask import Flask, request, jsonify
 from firebase import firestore_client
 from google.cloud import firestore 
 from datetime import datetime, timedelta
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Set up OpenAI API key
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 app = Flask(__name__)
 
@@ -76,14 +85,30 @@ def get_upcoming_tasks():
 # 3. **Email Thread Summarization**
 
 # Generate a summary of an email thread
-@app.route('/summarize-email', methods=['POST'])
+@app.route('/summarize_email', methods=['POST'])
 def summarize_email():
-    data = request.get_json()
-    email_thread = data['email_thread']
-    summary = " ".join([message['content'] for message in email_thread])
-    email_thread_id = len(summaries) + 1
-    summaries[email_thread_id] = summary
-    return jsonify({"summary": summary})
+    # Get the email content from the request
+    email_content = request.json.get('email_content')
+
+    if not email_content:
+        return jsonify({"error": "No email content provided"}), 400
+
+    try:
+        # Request OpenAI's API to summarize the email content
+        response = openai.Completion.create(
+            model="text-davinci-003",  # You can use other models if needed
+            prompt=f"Summarize this email content: {email_content}",
+            max_tokens=150
+        )
+
+        # Extract the summarized text from the response
+        summary = response.choices[0].text.strip()
+
+        # Return the summary as a JSON response
+        return jsonify({"summary": summary})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 # 4. **Reminders and Alerts**
