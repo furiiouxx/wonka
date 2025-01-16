@@ -67,7 +67,7 @@ def get_past_tasks():
     # Fetch tasks with due dates before the current date
     current_date = datetime.now()
     tasks_ref = firestore_client.collection('tasks')
-    query = tasks_ref.where('due_date', '<', current_date)
+    query = tasks_ref.where('publish_date', '<', current_date)
     past_tasks = [doc.to_dict() for doc in query.stream()]
     return jsonify({"tasks": past_tasks}), 200
 
@@ -77,7 +77,7 @@ def get_upcoming_tasks():
     # Fetch tasks with due dates after or equal to the current date.
     current_date = datetime.now()
     tasks_ref = firestore_client.collection('tasks')
-    query = tasks_ref.where('due_date', '>=', current_date)
+    query = tasks_ref.where('publish_date', '>=', current_date)
     upcoming_tasks = [doc.to_dict() for doc in query.stream()]
     return jsonify({"tasks": upcoming_tasks}), 200
 
@@ -119,8 +119,7 @@ def schedule_reminder():
     data = request.json
     reminder = {
         "title": data.get("title"),
-        "remind_at": datetime.strptime(data.get("send_date"), '%Y-%m-%d %H:%M:%S'),
-        "due_date": datetime.strptime(data.get("remind_at"), '%Y-%m-%d %H:%M:%S')
+        "remind_at": datetime.strptime(data.get("remind_at"), '%Y-%m-%d %H:%M:%S'),
     }
     reminder_ref = firestore_client.collection('reminders').add(reminder)
     return jsonify({"id": reminder_ref[1].id, "message": "Reminder scheduled!"}), 201
@@ -132,8 +131,8 @@ def get_weekly_reminders():
     end_date = start_date + timedelta(days=7)
     reminders = []
     for reminder in firestore_client.collection('reminders') \
-        .where('send_date', '>=', start_date) \
-        .where('send_date', '<=', end_date).stream():
+        .where('remind_at', '>=', start_date) \
+        .where('remind_at', '<=', end_date).stream():
         reminder_data = reminder.to_dict()
         reminder_data['id'] = reminder.id
         reminders.append(reminder_data)

@@ -52,14 +52,25 @@
             flex: 1;
             gap: 20px;
         }
-        .widget {
+        .sent-widget {
             flex: 1;
             background-color: #d8bfd8;
             border: 1px solid #DDE1E6;
             border-radius: 5px;
             padding: 15px;
         }
-        .widget h2 {
+        .upcoming-widget {
+            flex: 1;
+            background-color: #d8bfd8;
+            border: 1px solid #DDE1E6;
+            border-radius: 5px;
+            padding: 15px;
+        }
+        .sent-widget h2 {
+            margin: 0 0 10px 0;
+            font-size: 18px;
+        }
+        .upcoming-widget h2 {
             margin: 0 0 10px 0;
             font-size: 18px;
         }
@@ -69,7 +80,10 @@
         .side-widget {
             font-family: "New Century Schoolbook", "TeX Gyre Schola", serif;
         }
-        .widget {
+        .sent-widget {
+            font-family: "New Century Schoolbook", "TeX Gyre Schola", serif;
+        }
+        .upcoming-widget {
             font-family: "New Century Schoolbook", "TeX Gyre Schola", serif;
         }
     </style>
@@ -95,15 +109,15 @@
                 <div class="side-widget">
                     <h2 style="font-family: 'New Century Schoolbook', 'TeX Gyre Schola', serif;">TO DO LIST</h2>
                     <!-- Content for to-do list can go here -->
-                    <a href="reminder.html" class="to-do-button" style="display: block; text-align: center; text-decoration: none; color: white; background-color: #3e2f84; padding: 10px; border-radius: 5px;">+ Add New Task</a>
+                    <a href="reminder.html" class="to-do-button" style="display: block; text-align: center; text-decoration: none; color: white; background-color: #3e2f84; padding: 10px; border-radius: 5px;">+ Add New Reminder</a>
                 </div>
             </div>
             <div class="bottom-section">
-                <div class="widget">
+                <div class="upcoming-widget">
                     <h2 style="font-family: 'New Century Schoolbook', 'TeX Gyre Schola', serif;">TO BE SENT:</h2>
                     <!-- Content for to-be-sent items can go here -->
                 </div>
-                <div class="widget">
+                <div class="sent-widget">
                     <h2 style="font-family: 'New Century Schoolbook', 'TeX Gyre Schola', serif;">SENT:</h2>
                     <!-- Content for sent items can go here -->
                 </div>
