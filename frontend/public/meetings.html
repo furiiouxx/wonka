@@ -148,68 +148,79 @@
             background-color: #2980b9;
         }
         
-        /* Calendar Styles */
+        /* Calender Styles */
         #calendar-container {
-            font-family: "New Century Schoolbook", serif;
-            padding: 10px;
+            font-family: Arial, sans-serif;
+            margin: 20px;
             display: flex;
             flex-direction: column;
+            width: 100%;
+            max-width: 900px;
         }
     
         #calendar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #f8f9fa;
+            text-align: center;
             padding: 10px;
-            border-bottom: 1px solid #ddd;
+            font-size: 24px;
+            background-color: #f8f9fa;
+            border-bottom: 2px solid #ddd;
         }
     
         #weekdays {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-            background-color: #f0f0f0;
-            padding: 10px 0;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
             font-weight: bold;
+            padding: 10px 0;
+            background-color: #f0f0f0;
+            border-bottom: 1px solid #ddd;
         }
     
         #calendar-grid {
             display: grid;
-            grid-template-columns: 1fr repeat(7, 1fr);
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            background-color: #ddd;
         }
     
-        .time-column {
-            display: flex;
-            flex-direction: column;
-            background-color: #f7f7f7;
-        }
-    
-        .time-slot {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-            font-size: 12px;
-        }
-    
-        .day-column {
-            border-left: 1px solid #ddd;
+        .day {
+            background-color: white;
+            min-height: 80px;
+            text-align: right;
+            padding: 5px;
             position: relative;
         }
     
-        .event {
-            margin: 10px;
-            padding: 5px;
-            font-size: 12px;
-            text-align: center;
-            color: white;
-            border-radius: 5px;
+        .day.empty {
+            background-color: #f0f0f0;
         }
     
-        .event.blue {
-            background-color: #3b86ff;
+        .day.event {
+            background-color: #f0f0f0;
+        }
+    
+        .event.orange {
+            background-color: #ffa500;
+            color: white;
+            font-weight: bold;
+        }
+    
+        .event.purple {
+            background-color: #9370db;
+            color: white;
+            font-weight: bold;
         }
     
         .event.green {
             background-color: #6abf69;
+            color: white;
+            font-weight: bold;
+        }
+    
+        .event.red {
+            background-color: #ff6347;
+            color: white;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -225,16 +236,15 @@
     
 
     <div class="content">
-        <!-- Code for Calendar -->
+
+        <!-- Calendar Content -->
         <div id="calendar-container">
             <!-- Calendar Header -->
             <div id="calendar-header">
-              <button id="prev-week">←</button>
-              <h2>May 2022</h2>
-              <button id="next-week">→</button>
+              <h2>January 2025</h2>
             </div>
           
-            <!-- Days of the Week -->
+            <!-- Weekday Labels -->
             <div id="weekdays">
               <div>Sun</div>
               <div>Mon</div>
@@ -247,45 +257,61 @@
           
             <!-- Calendar Grid -->
             <div id="calendar-grid">
-              <!-- Time Slots -->
-              <div class="time-column">
-                <div class="time-slot">8 AM</div>
-                <div class="time-slot">9 AM</div>
-                <div class="time-slot">10 AM</div>
-                <div class="time-slot">11 AM</div>
-                <div class="time-slot">12 PM</div>
-                <div class="time-slot">1 PM</div>
-                <div class="time-slot">2 PM</div>
-                <div class="time-slot">3 PM</div>
-                <div class="time-slot">4 PM</div>
-                <div class="time-slot">5 PM</div>
-                <div class="time-slot">6 PM</div>
-                <div class="time-slot">7 PM</div>
-                <div class="time-slot">8 PM</div>
-                <div class="time-slot">9 PM</div>
-                <div class="time-slot">10 PM</div>
-                <div class="time-slot">11 PM</div>
-                <div class="time-slot">12 AM</div>
+              <!-- Row 1 -->
+              <div class="day empty"></div>
+              <div class="day empty"></div>
+              <div class="day">1</div>
+              <div class="day">2</div>
+              <div class="day">3</div>
+              <div class="day">4</div>
+              <div class="day">5</div>
+          
+              <!-- Row 2 -->
+              <div class="day">6</div>
+              <div class="day">7</div>
+              <div class="day">8</div>
+              <div class="day">9</div>
+              <div class="day event orange">10
+                <div class="event-text">Finance Dept Meeting<br>10:00 AM</div>
               </div>
-              <!-- Days -->
-              <div class="day-column">
-                <div class="event blue">Information<br>10-11 AM</div>
-                <div class="event green">Notion Follow<br>1-2 PM</div>
+              <div class="day">11</div>
+              <div class="day">12</div>
+          
+              <!-- Row 3 -->
+              <div class="day">13</div>
+              <div class="day event purple">14
+                <div class="event-text">Book Sale Briefing<br>8:00 AM</div>
               </div>
-              <div class="day-column">
-                <div class="event blue">Information<br>10-11 AM</div>
-                <div class="event green">Notion Follow<br>1-2 PM</div>
+              <div class="day">15</div>
+              <div class="day">16</div>
+              <div class="day">17</div>
+              <div class="day">18</div>
+              <div class="day">19</div>
+          
+              <!-- Row 4 -->
+              <div class="day">20</div>
+              <div class="day">21</div>
+              <div class="day event green">22
+                <div class="event-text">Budget Proposal Meeting<br>4:00 PM</div>
               </div>
-              <div class="day-column"></div>
-              <div class="day-column"></div>
-              <div class="day-column"></div>
-              <div class="day-column">
-                <div class="event blue">Information<br>10-11 AM</div>
-                <div class="event green">Notion Follow<br>1-2 PM</div>
+              <div class="day">23</div>
+              <div class="day">24</div>
+              <div class="day">25</div>
+              <div class="day">26</div>
+          
+              <!-- Row 5 -->
+              <div class="day">27</div>
+              <div class="day event red">28
+                <div class="event-text">Annual General Meeting<br>7:00 PM</div>
               </div>
-              <div class="day-column"></div>
+              <div class="day">29</div>
+              <div class="day">30</div>
+              <div class="day">31</div>
+              <div class="day empty"></div>
+              <div class="day empty"></div>
             </div>
           </div>
+          
           
 
         <!-- Content for the calendar page -->
