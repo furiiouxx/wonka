@@ -151,19 +151,26 @@
         /* Calender Styles */
         #calendar-container {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 20px auto;
             display: flex;
             flex-direction: column;
             width: 100%;
             max-width: 900px;
-        }
+            background-color: #fff; /* White background */
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+             overflow: hidden;
+         }
+
     
         #calendar-header {
             text-align: center;
             padding: 10px;
             font-size: 24px;
-            background-color: #f8f9fa;
-            border-bottom: 2px solid #ddd;
+            color: white; /* White text for contrast */
+            background-color: #802BB1; /* Matches the theme color */
+            border-bottom: 2px solid #ddd; /* Optional border for separation */
         }
     
         #weekdays {
@@ -172,7 +179,8 @@
             text-align: center;
             font-weight: bold;
             padding: 10px 0;
-            background-color: #f0f0f0;
+            background-color: #a67cd6; /* Lighter purple */
+            color: white; /* White text for contrast */
             border-bottom: 1px solid #ddd;
         }
     
@@ -184,10 +192,11 @@
         }
     
         .day {
-            background-color: white;
+            background-color: #f9f5fb; /* Very light purple/white */
             min-height: 80px;
             text-align: right;
             padding: 5px;
+            border: 1px solid #ddd; /* Border to separate days */
             position: relative;
         }
     
@@ -196,32 +205,35 @@
         }
     
         .day.event {
-            background-color: #f0f0f0;
+            background-color: #d5a6ff; /* Highlighted background for event days */
+            color: white; /* White text for better readability */
+            font-weight: bold;
         }
     
         .event.orange {
-            background-color: #ffa500;
+            background-color: #d485ff; /* Soft orange-pink shade */
             color: white;
             font-weight: bold;
         }
-    
+
         .event.purple {
-            background-color: #9370db;
+            background-color: #9370db; /* A darker purple */
             color: white;
             font-weight: bold;
         }
-    
+
         .event.green {
-            background-color: #6abf69;
+            background-color: #b0d0a6; /* Soft green for variety */
             color: white;
             font-weight: bold;
         }
-    
+
         .event.red {
-            background-color: #ff6347;
+            background-color: #e57373; /* Muted red for critical events */
             color: white;
             font-weight: bold;
         }
+
     </style>
 </head>
 <body>
