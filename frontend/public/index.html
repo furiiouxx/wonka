@@ -86,6 +86,68 @@
         .upcoming-widget {
             font-family: "New Century Schoolbook", "TeX Gyre Schola", serif;
         }
+
+        /*Meeting Styles*/
+
+.meeting {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fefefe;
+}
+
+.meeting-date {
+  font-weight: bold;
+  font-size: 14px;
+  color: #555;
+}
+
+.meeting-details {
+  font-size: 13px;
+  color: #333;
+}
+
+        /* Reminder Styles */
+.reminder {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+.reminder-message {
+  font-weight: bold;
+  font-size: 14px;
+  color: #444;
+}
+
+.reminder-due {
+  font-size: 12px;
+  color: #777;
+}
+/*Tasks Styles*/
+.task {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+.task-title {
+  font-weight: bold;
+  font-size: 14px;
+  color: #444;
+}
+
+.task-due, .sent-to {
+  font-size: 12px;
+  color: #777;
+}
+
+
     </style>
 </head>
 <body>
@@ -103,23 +165,75 @@
         <div class="content">
             <div class="top-section">
                 <div class="main-widget">
-                    <h2 style="font-family: 'New Century Schoolbook', 'TeX Gyre Schola', serif;">MEETINGS FOR THE WEEK</h2>
-                    <!-- Content for meetings can go here -->
+                    <h2 style="font-family: 'New Century Schoolbook', 'TeX Gyre Schola', serif;">UPCOMING MEETINGS FOR THE MONTH</h2>
+                    <div class="meeting">
+                        <div class="meeting-date">Thursday, Jan 10</div>
+                        <div class="meeting-details">Finance Dept Meeting 10:00 AM</div>
+                      </div>
+
+                      <div class="meeting">
+                        <div class="meeting-date">Monday, Jan 19</div>
+                        <div class="meeting-details">Book Sale Briefing 8:00 AM</div>
+                      </div>
+
+                      <div class="meeting">
+                        <div class="meeting-date">Tuesday, Jan 22</div>
+                        <div class="meeting-details">Budget Proposal Meeting 4:00 PM</div>
+                      </div>
+                      
+                      <div class="meeting">
+                        <div class="meeting-date">Monday, Jan 28</div>
+                        <div class="meeting-details">Annual General Meeting 7:00 PM</div>
+                      </div>
                 </div>
                 <div class="side-widget">
                     <h2 style="font-family: 'New Century Schoolbook', 'TeX Gyre Schola', serif;">TO DO LIST</h2>
-                    <!-- Content for to-do list can go here -->
+                    
+                    <div class="reminder">
+                        <div class="reminder-message">Submit budget report</div>
+                        <div class="reminder-due">Due: Jan 18, 2025, 5:00 PM</div>
+                      </div>
+
+                      <div class="reminder">
+                        <div class="reminder-message">Prepare Logs list for Book Fair</div>
+                        <div class="reminder-due">Due: Jan 22, 2025, 3:00 PM</div>
+                      </div>
+
+                      <div class="reminder">
+                        <div class="reminder-message">Create Presentation Deck for AGM</div>
+                        <div class="reminder-due">Due: Jan 27, 2025, 5:00 PM</div>
+                      </div>
                     <a href="reminder.html" class="to-do-button" style="display: block; text-align: center; text-decoration: none; color: white; background-color: #3e2f84; padding: 10px; border-radius: 5px;">+ Add New Reminder</a>
                 </div>
             </div>
             <div class="bottom-section">
                 <div class="upcoming-widget">
                     <h2 style="font-family: 'New Century Schoolbook', 'TeX Gyre Schola', serif;">TO BE SENT:</h2>
-                    <!-- Content for to-be-sent items can go here -->
+                    <div class="task">
+                        <div class="task-title">Finalize Report</div>
+                        <div class="task-due">Due By: Jan 20, 2025</div>
+                        <div class="sent-to">Recipients: Shakti, Cheryl</div>
+                      </div>
+
+                      <div class="task">
+                        <div class="task-title">Provide AGM Meeting Plan</div>
+                        <div class="task-due">Due By: Jan 26, 2025</div>
+                        <div class="sent-to">Recipients: Rachel</div>
+                      </div>
                 </div>
                 <div class="sent-widget">
                     <h2 style="font-family: 'New Century Schoolbook', 'TeX Gyre Schola', serif;">SENT:</h2>
-                    <!-- Content for sent items can go here -->
+                    <div class="task">
+                        <div class="task-title">Submit Finance Meeting Minutes</div>
+                        <div class="task-due">Due By: Jan 15, 2025</div>
+                        <div class="sent-to">Recipients: Adryna</div>
+                      </div>
+
+                      <div class="task">
+                        <div class="task-title">Prepare Book Sale Briefing Slides</div>
+                        <div class="task-due">Due By: Jan 14, 2025</div>
+                        <div class="sent-to">Recipients: Cheryl</div>
+                      </div>
                 </div>
             </div>
         </div>
