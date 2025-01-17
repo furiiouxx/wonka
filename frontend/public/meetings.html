@@ -12,20 +12,21 @@
         body {
             display: flex;
         }
-
+    
         .content {
             flex: 1;
             position: relative;
             font-family: "New Century Schoolbook", "TeX Gyre Schola", serif;
         }
-
+    
         .floating-button {
             position: fixed;
             bottom: 20px;
             right: 20px;
             width: 60px;
             height: 60px;
-            background-color: #802BB1; /* Matches the WONKA header color */
+            background-color: #802BB1;
+            /* Matches the WONKA header color */
             color: white;
             font-size: 36px;
             font-weight: bold;
@@ -38,7 +39,7 @@
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
             z-index: 1000;
         }
-
+    
         .sidebar-dropdown {
             display: none;
             position: fixed;
@@ -53,29 +54,29 @@
             box-sizing: border-box;
             z-index: 999;
         }
-
+    
         .sidebar-dropdown.show {
             display: block;
         }
-
+    
         .sidebar-dropdown h2 {
             font-size: 32px;
             margin-bottom: 40px;
             text-align: center;
         }
-
+    
         .form-group {
             display: flex;
             flex-direction: column;
             margin-bottom: 30px;
         }
-
+    
         .form-group label {
             font-size: 20px;
             font-weight: bold;
             margin-bottom: 10px;
         }
-
+    
         .participants-box {
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -86,7 +87,7 @@
             position: relative;
             min-height: 50px;
         }
-
+    
         .dropdown-list {
             display: none;
             position: absolute;
@@ -99,21 +100,21 @@
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
             z-index: 1000;
         }
-
+    
         .dropdown-list.show {
             display: block;
         }
-
+    
         .dropdown-list div {
             padding: 15px;
             font-size: 18px;
             cursor: pointer;
         }
-
+    
         .dropdown-list div:hover {
             background-color: #f0f0f0;
         }
-
+    
         .selected-participants {
             display: inline-block;
             background-color: #e0e0e0;
@@ -123,11 +124,11 @@
             font-size: 16px;
             cursor: pointer;
         }
-
+    
         .selected-participants:hover {
             background-color: #d0d0d0;
         }
-
+    
         .add-meeting-button {
             display: block;
             margin: 30px auto 0 auto;
@@ -142,9 +143,73 @@
             text-align: center;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
         }
-
+    
         .add-meeting-button:hover {
             background-color: #2980b9;
+        }
+        
+        /* Calendar Styles */
+        #calendar-container {
+            font-family: "New Century Schoolbook", serif;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+    
+        #calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+    
+        #weekdays {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+            background-color: #f0f0f0;
+            padding: 10px 0;
+            font-weight: bold;
+        }
+    
+        #calendar-grid {
+            display: grid;
+            grid-template-columns: 1fr repeat(7, 1fr);
+        }
+    
+        .time-column {
+            display: flex;
+            flex-direction: column;
+            background-color: #f7f7f7;
+        }
+    
+        .time-slot {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            font-size: 12px;
+        }
+    
+        .day-column {
+            border-left: 1px solid #ddd;
+            position: relative;
+        }
+    
+        .event {
+            margin: 10px;
+            padding: 5px;
+            font-size: 12px;
+            text-align: center;
+            color: white;
+            border-radius: 5px;
+        }
+    
+        .event.blue {
+            background-color: #3b86ff;
+        }
+    
+        .event.green {
+            background-color: #6abf69;
         }
     </style>
 </head>
@@ -160,6 +225,69 @@
     
 
     <div class="content">
+        <!-- Code for Calendar -->
+        <div id="calendar-container">
+            <!-- Calendar Header -->
+            <div id="calendar-header">
+              <button id="prev-week">←</button>
+              <h2>May 2022</h2>
+              <button id="next-week">→</button>
+            </div>
+          
+            <!-- Days of the Week -->
+            <div id="weekdays">
+              <div>Sun</div>
+              <div>Mon</div>
+              <div>Tue</div>
+              <div>Wed</div>
+              <div>Thu</div>
+              <div>Fri</div>
+              <div>Sat</div>
+            </div>
+          
+            <!-- Calendar Grid -->
+            <div id="calendar-grid">
+              <!-- Time Slots -->
+              <div class="time-column">
+                <div class="time-slot">8 AM</div>
+                <div class="time-slot">9 AM</div>
+                <div class="time-slot">10 AM</div>
+                <div class="time-slot">11 AM</div>
+                <div class="time-slot">12 PM</div>
+                <div class="time-slot">1 PM</div>
+                <div class="time-slot">2 PM</div>
+                <div class="time-slot">3 PM</div>
+                <div class="time-slot">4 PM</div>
+                <div class="time-slot">5 PM</div>
+                <div class="time-slot">6 PM</div>
+                <div class="time-slot">7 PM</div>
+                <div class="time-slot">8 PM</div>
+                <div class="time-slot">9 PM</div>
+                <div class="time-slot">10 PM</div>
+                <div class="time-slot">11 PM</div>
+                <div class="time-slot">12 AM</div>
+              </div>
+              <!-- Days -->
+              <div class="day-column">
+                <div class="event blue">Information<br>10-11 AM</div>
+                <div class="event green">Notion Follow<br>1-2 PM</div>
+              </div>
+              <div class="day-column">
+                <div class="event blue">Information<br>10-11 AM</div>
+                <div class="event green">Notion Follow<br>1-2 PM</div>
+              </div>
+              <div class="day-column"></div>
+              <div class="day-column"></div>
+              <div class="day-column"></div>
+              <div class="day-column">
+                <div class="event blue">Information<br>10-11 AM</div>
+                <div class="event green">Notion Follow<br>1-2 PM</div>
+              </div>
+              <div class="day-column"></div>
+            </div>
+          </div>
+          
+
         <!-- Content for the calendar page -->
         <button class="floating-button" onclick="toggleSidebar()">+</button>
         <div id="sidebarDropdown" class="sidebar-dropdown">

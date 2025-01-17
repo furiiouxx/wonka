@@ -1,4 +1,4 @@
-const BASE_URL = "https://api.myapp.com";  // Replace with your actual API URL
+const BASE_URL = 'http://localhost:5000';  // Backend base URL
 
 // Utility function for API calls
 async function apiCall(endpoint, method = "GET", data = null) {

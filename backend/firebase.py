@@ -14,14 +14,7 @@ if not firebase_admin._apps:  # Ensures the app isn't initialized multiple times
 # Initialize Firestore client
 firestore_client = firestore.client()
 
-""" def fetch_meetings():
-    meetings_ref = firestore_client.collection('meetings')  # Access the 'meetings' collection
-    meetings = meetings_ref.stream()  # Retrieve documents as a stream
-    
-    # Loop through and print the meetings data
-    for meeting in meetings:
-        print(f"{meeting.id} => {meeting.to_dict()}")
 
-# Call the function to fetch data
-fetch_meetings() """
+
+
 

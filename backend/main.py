@@ -4,6 +4,7 @@
 import openai 
 import os
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from firebase import firestore_client
 from google.cloud import firestore 
 from datetime import datetime, timedelta
@@ -16,6 +17,7 @@ load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}}) # This allows all origins by default
 
 
 # 1. **Meeting Scheduling** 
